@@ -14,6 +14,7 @@ import XCTest
      override func setUp() {
         app = XCUIApplication()
          continueAfterFailure = false
+         app.launchEnvironment = ["ENV": "TEST"]
          app.launch()
      }
 
@@ -36,6 +37,18 @@ import XCTest
      }
     
      func testShouldNavigateToDashboardScreenWhenAuthenitcated(){
+         let usernameTextField = app.textFields["usernameTextField"]
+         usernameTextField.tap()
+         usernameTextField.typeText("JohnDoe")
          
+         let passwordTextField = app.textFields["passwordTextField"]
+         passwordTextField.tap()
+         passwordTextField.typeText("Password")
+         
+         let loginButton = app.buttons["loginButton"]
+         loginButton.tap()
+         
+         let dashboardNavBarTitle = app.staticTexts["Dashboard"]
+         XCTAssertTrue(dashboardNavBarTitle.waitForExistence(timeout: 0.5))
      }
 }
